@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ngn",
+		"gGg",
+		"ngn"
+	],
+	"key": {
+		"n": {
+			"item": "minecraft:netherite_scrap"
+		},
+		"g": {
+			"item": "minecraft:gold_ingot"
+		},
+		"G": {
+			"item": "simple_cobblestone_generator:generator_tier4"
+		}
+	},
+	"result": {
+		"item": "simple_cobblestone_generator:generator_tier5"
+	}
+}

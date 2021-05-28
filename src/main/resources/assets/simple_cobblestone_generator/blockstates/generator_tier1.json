@@ -1,0 +1,9 @@
+{
+	"variants": {
+		"facing=north": { "model": "simple_cobblestone_generator:block/generator_tier1" },
+		"facing=east":  { "model": "simple_cobblestone_generator:block/generator_tier1", "y":  90},
+		"facing=south": { "model": "simple_cobblestone_generator:block/generator_tier1", "y": 180 },
+		"facing=west":  { "model": "simple_cobblestone_generator:block/generator_tier1", "y": 270 }
+	}
+}
+

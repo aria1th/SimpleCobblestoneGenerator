@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ddd",
+		"dGd",
+		"ddd"
+	],
+	"key": {
+		"d": {
+			"item": "minecraft:diamond"
+		},
+		"G": {
+			"item": "simple_cobblestone_generator:generator_tier3"
+		}
+	},
+	"result": {
+		"item": "simple_cobblestone_generator:generator_tier4"
+	}
+}

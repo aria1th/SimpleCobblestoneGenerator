@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ggg",
+		"gGg",
+		"ggg"
+	],
+	"key": {
+		"g": {
+			"item": "minecraft:gold_ingot"
+		},
+		"G": {
+			"item": "simple_cobblestone_generator:generator_tier1"
+		}
+	},
+	"result": {
+		"item": "simple_cobblestone_generator:generator_tier2"
+	}
+}

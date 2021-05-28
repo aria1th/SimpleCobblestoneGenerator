@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"top": "simple_cobblestone_generator:block/generator_tier1_top",
+		"front": "simple_cobblestone_generator:block/generator_tier1_front",
+		"side": "simple_cobblestone_generator:block/generator_tier1_side"
+	}
+  }
