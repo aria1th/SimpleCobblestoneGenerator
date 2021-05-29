@@ -2,6 +2,7 @@ package dev.fulmineo.simple_cobblestone_generator.block.entity;
 
 import org.jetbrains.annotations.Nullable;
 
+import dev.fulmineo.simple_cobblestone_generator.SimpleCobblestoneGenerator;
 import dev.fulmineo.simple_cobblestone_generator.screen.CobblestoneGeneratorScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,26 +15,27 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
-public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableContainerBlockEntity implements SidedInventory, Tickable {
+public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableContainerBlockEntity implements SidedInventory {
 	private SimpleInventory inventory;
 	private short genTicks;
 	private short ticksToGenerate;
 	private String name;
 
-	public AbstractCobblestoneGeneratorBlockEntity(BlockEntityType<?> blockEntityType) {
-		super(blockEntityType);
+	public AbstractCobblestoneGeneratorBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
+		super(blockEntityType, pos, state);
 	}
 
-	public AbstractCobblestoneGeneratorBlockEntity(BlockEntityType<?> blockEntityType, String name, short ticksToGenerate) {
-		super(blockEntityType);
+	public AbstractCobblestoneGeneratorBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, String name, short ticksToGenerate) {
+		super(blockEntityType, pos, state);
 		this.name = name;
 		this.ticksToGenerate = ticksToGenerate;
 		this.genTicks = this.ticksToGenerate;
@@ -48,37 +50,38 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 		return new CobblestoneGeneratorScreenHandler(syncId, playerInventory, this);
 	}
 
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound tag) {
+		super.readNbt(tag);
 		this.inventory = new SimpleInventory(1);
-		ListTag listTag = tag.getList("Items", 10);
-		this.inventory.setStack(0, listTag.size() > 0 ? ItemStack.fromTag((CompoundTag)listTag.get(0))  : new ItemStack(Items.AIR));
+		NbtList listTag = tag.getList("Items", 10);
+		this.inventory.setStack(0, listTag.size() > 0 ? ItemStack.fromNbt((NbtCompound)listTag.get(0))  : new ItemStack(Items.AIR));
 		this.genTicks = tag.getShort("GenTime");
 	}
 
-	public CompoundTag toTag(CompoundTag tag) {
-		super.toTag(tag);
+	public NbtCompound writeNbt(NbtCompound tag) {
+		super.writeNbt(tag);
 		tag.putShort("GenTime", (short)this.genTicks);
-		ListTag listTag = new ListTag();
-		listTag.add(this.inventory.getStack(0).toTag(new CompoundTag()));
+		NbtList listTag = new NbtList();
+		listTag.add(this.inventory.getStack(0).writeNbt(new NbtCompound()));
 		tag.put("Items", listTag);
 		return tag;
 	}
 
-	public void tick() {
-		if (this.genTicks > 0) this.genTicks--;
-		if (this.genTicks == 0) {
-			this.genTicks = this.ticksToGenerate;
+	public static void tick(World world, BlockPos pos, BlockState state, AbstractCobblestoneGeneratorBlockEntity blockEntity) {
+		SimpleCobblestoneGenerator.info("ciao");
+		if (blockEntity.genTicks > 0) blockEntity.genTicks--;
+		if (blockEntity.genTicks == 0) {
+			blockEntity.genTicks = blockEntity.ticksToGenerate;
 
-			ItemStack itemStack = this.inventory.getStack(0);
+			ItemStack itemStack = blockEntity.inventory.getStack(0);
 			if (itemStack.getItem() != Items.COBBLESTONE){
 				itemStack = new ItemStack(Items.COBBLESTONE);
 			} else {
 				itemStack.increment(1);
 			}
-			this.inventory.setStack(0, itemStack);
+			blockEntity.inventory.setStack(0, itemStack);
 
-			BlockEntity upperBlockEntity = this.world.getBlockEntity(this.getPos().up());
+			BlockEntity upperBlockEntity = world.getBlockEntity(pos.up());
 			if (upperBlockEntity != null && upperBlockEntity instanceof LootableContainerBlockEntity) {
 				LootableContainerBlockEntity inventory = (LootableContainerBlockEntity) upperBlockEntity;
 				for (int i = 0; i < inventory.size(); i++) {

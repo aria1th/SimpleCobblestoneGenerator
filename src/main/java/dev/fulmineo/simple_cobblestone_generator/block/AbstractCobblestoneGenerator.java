@@ -20,6 +20,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -54,7 +56,7 @@ public abstract class AbstractCobblestoneGenerator extends BlockWithEntity {
 	private String name;
 
 	public AbstractCobblestoneGenerator(int tier) {
-		super(FabricBlockSettings.of(Material.METAL, Blocks.IRON_BLOCK.getDefaultMaterialColor()).strength(2.0f, 3.0f).sounds(BlockSoundGroup.METAL).breakByTool(FabricToolTags.PICKAXES, 2));
+		super(FabricBlockSettings.of(Material.METAL, Blocks.IRON_BLOCK.getDefaultMapColor()).strength(2.0f, 3.0f).sounds(BlockSoundGroup.METAL).breakByTool(FabricToolTags.PICKAXES, 2));
 		this.tier = tier;
 		this.name = "generator_tier" + tier;
 		this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)));
@@ -152,6 +154,11 @@ public abstract class AbstractCobblestoneGenerator extends BlockWithEntity {
 
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
+	}
+
+	@Nullable
+	protected static <T extends BlockEntity> BlockEntityTicker<T> checkType(World world, BlockEntityType<T> givenType, BlockEntityType<? extends AbstractCobblestoneGeneratorBlockEntity> expectedType) {
+	   return world.isClient ? null : checkType(givenType, expectedType, AbstractCobblestoneGeneratorBlockEntity::tick);
 	}
 
 	static {
