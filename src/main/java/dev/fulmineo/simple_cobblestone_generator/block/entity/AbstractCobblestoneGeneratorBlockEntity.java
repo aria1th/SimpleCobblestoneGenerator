@@ -2,7 +2,6 @@ package dev.fulmineo.simple_cobblestone_generator.block.entity;
 
 import org.jetbrains.annotations.Nullable;
 
-import dev.fulmineo.simple_cobblestone_generator.SimpleCobblestoneGenerator;
 import dev.fulmineo.simple_cobblestone_generator.screen.CobblestoneGeneratorScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -68,7 +67,6 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 	}
 
 	public static void tick(World world, BlockPos pos, BlockState state, AbstractCobblestoneGeneratorBlockEntity blockEntity) {
-		SimpleCobblestoneGenerator.info("ciao");
 		if (blockEntity.genTicks > 0) blockEntity.genTicks--;
 		if (blockEntity.genTicks == 0) {
 			blockEntity.genTicks = blockEntity.ticksToGenerate;

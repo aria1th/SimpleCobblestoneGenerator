@@ -30,7 +30,7 @@ public class CobblestoneGeneratorScreenHandler extends ScreenHandler {
             }
 
             @Environment(EnvType.CLIENT)
-            public boolean doDrawHoveringEffect() {
+            public boolean isEnabled() {
                 return true;
             }
 		});
