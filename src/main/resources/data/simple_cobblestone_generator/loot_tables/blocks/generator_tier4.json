@@ -6,7 +6,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "simple_cobblestone_generator:generator_tier5"
+					"name": "simple_cobblestone_generator:generator_tier4"
 				}
 			],
 			"conditions": [
