@@ -1,3 +1,6 @@
+# 1.1.4
+- Updated to Minecraft version 1.17.1
+
 # 1.1.3
 - Fixed the Fabulous cobblestone generator not dropping when broken
 
