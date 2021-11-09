@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"simple_cobblestone_generator:generator_tier1",
+		"simple_cobblestone_generator:generator_tier2",
+		"simple_cobblestone_generator:generator_tier3",
+		"simple_cobblestone_generator:generator_tier4",
+		"simple_cobblestone_generator:generator_tier5"
+	]
+}

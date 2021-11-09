@@ -11,7 +11,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -56,7 +55,7 @@ public abstract class AbstractCobblestoneGenerator extends BlockWithEntity {
 	private String name;
 
 	public AbstractCobblestoneGenerator(int tier) {
-		super(FabricBlockSettings.of(Material.METAL, Blocks.IRON_BLOCK.getDefaultMapColor()).strength(2.0f, 3.0f).sounds(BlockSoundGroup.METAL).breakByTool(FabricToolTags.PICKAXES, 2));
+		super(FabricBlockSettings.of(Material.METAL, Blocks.IRON_BLOCK.getDefaultMapColor()).strength(2.0f, 3.0f).sounds(BlockSoundGroup.METAL));
 		this.tier = tier;
 		this.name = "generator_tier" + tier;
 		this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)));
