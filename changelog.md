@@ -1,3 +1,6 @@
+# 1.1.6
+- Updated to Minecraft 1.18
+
 # 1.1.5
 - Revamped all the textures thanks to DH!
 

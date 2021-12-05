@@ -57,13 +57,12 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 		this.genTicks = tag.getShort("GenTime");
 	}
 
-	public NbtCompound writeNbt(NbtCompound tag) {
+	public void writeNbt(NbtCompound tag) {
 		super.writeNbt(tag);
 		tag.putShort("GenTime", (short)this.genTicks);
 		NbtList listTag = new NbtList();
 		listTag.add(this.inventory.getStack(0).writeNbt(new NbtCompound()));
 		tag.put("Items", listTag);
-		return tag;
 	}
 
 	public static void tick(World world, BlockPos pos, BlockState state, AbstractCobblestoneGeneratorBlockEntity blockEntity) {
