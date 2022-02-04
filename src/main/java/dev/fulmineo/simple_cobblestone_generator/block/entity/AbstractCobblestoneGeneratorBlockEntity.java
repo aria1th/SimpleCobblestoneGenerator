@@ -73,7 +73,7 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 			ItemStack itemStack = blockEntity.inventory.getStack(0);
 			if (itemStack.getItem() != Items.COBBLESTONE){
 				itemStack = new ItemStack(Items.COBBLESTONE);
-			} else {
+			} else if (itemStack.getCount() < 65536) {
 				itemStack.increment(1);
 			}
 			blockEntity.inventory.setStack(0, itemStack);
@@ -137,7 +137,7 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 		return this.inventory.removeStack(slot);
 	}
 
-	public void setStack(int slot, ItemStack stack) {}
+	public void setStack(int slot, ItemStack stack) {this.inventory.setStack(slot, stack);}
 
 	public boolean canPlayerUse(PlayerEntity player) {
 		if (this.world.getBlockEntity(this.pos) != this) {
