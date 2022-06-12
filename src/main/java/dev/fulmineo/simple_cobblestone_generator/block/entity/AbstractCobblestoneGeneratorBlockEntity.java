@@ -18,7 +18,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -42,7 +41,7 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 	}
 
 	protected Text getContainerName() {
-		return new TranslatableText("container." + this.name);
+		return Text.translatable("container." + this.name);
 	}
 
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
