@@ -35,7 +35,6 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -64,12 +63,12 @@ public abstract class AbstractCobblestoneGenerator extends BlockWithEntity {
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
 		tooltip.add(
-			new TranslatableText("lang.simple_cobblestone_generator.generates_every", SimpleCobblestoneGenerator.TIERS[this.tier-1] == 0 ? 64 : 1)
+			Text.translatable("lang.simple_cobblestone_generator.generates_every", SimpleCobblestoneGenerator.TIERS[this.tier-1] == 0 ? 64 : 1)
 			.append(" ")
-			.append(SimpleCobblestoneGenerator.TIERS[this.tier-1] <= 1 ? new TranslatableText("lang.simple_cobblestone_generator.tick") : new TranslatableText("lang.simple_cobblestone_generator.ticks", SimpleCobblestoneGenerator.TIERS[this.tier-1]))
+			.append(SimpleCobblestoneGenerator.TIERS[this.tier-1] <= 1 ? Text.translatable("lang.simple_cobblestone_generator.tick") : Text.translatable("lang.simple_cobblestone_generator.ticks", SimpleCobblestoneGenerator.TIERS[this.tier-1]))
 			.formatted(Formatting.GRAY)
 		);
-		tooltip.add(new TranslatableText("lang.simple_cobblestone_generator.tooltip").formatted(Formatting.DARK_GRAY));
+		tooltip.add(Text.translatable("lang.simple_cobblestone_generator.tooltip").formatted(Formatting.DARK_GRAY));
 	}
 
 	protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
@@ -82,7 +81,7 @@ public abstract class AbstractCobblestoneGenerator extends BlockWithEntity {
 
 				@Override
 				public Text getDisplayName() {
-					return new TranslatableText("containers." + AbstractCobblestoneGenerator.this.name);
+					return Text.translatable("containers." + AbstractCobblestoneGenerator.this.name);
 				}
 
 				@Override
