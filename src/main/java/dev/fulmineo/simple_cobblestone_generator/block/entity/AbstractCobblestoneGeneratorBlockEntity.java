@@ -1,5 +1,8 @@
 package dev.fulmineo.simple_cobblestone_generator.block.entity;
 
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import org.jetbrains.annotations.Nullable;
 
 import dev.fulmineo.simple_cobblestone_generator.screen.CobblestoneGeneratorScreenHandler;
@@ -63,7 +66,7 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 		listTag.add(this.inventory.getStack(0).writeNbt(new NbtCompound()));
 		tag.put("Items", listTag);
 	}
-
+	@SuppressWarnings("UnstableApiUsage")
 	public static void tick(World world, BlockPos pos, BlockState state, AbstractCobblestoneGeneratorBlockEntity blockEntity) {
 		if (blockEntity.genTicks > 0) blockEntity.genTicks--;
 		if (blockEntity.genTicks == 0) {
@@ -77,26 +80,13 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 			}
 			blockEntity.inventory.setStack(0, itemStack);
 
-			BlockEntity upperBlockEntity = world.getBlockEntity(pos.up());
-			if (upperBlockEntity != null && upperBlockEntity instanceof LootableContainerBlockEntity) {
-				LootableContainerBlockEntity inventory = (LootableContainerBlockEntity) upperBlockEntity;
-				for (int i = 0; i < inventory.size(); i++) {
-					ItemStack stack = inventory.getStack(i);
-					if (stack.isEmpty()){
-						stack = new ItemStack(itemStack.getItem());
-						inventory.setStack(i, stack);
-					}
-					if (stack.getItem() == itemStack.getItem()) {
-						int toInsert = stack.getMaxCount() - stack.getCount();
-						if (toInsert > 0) {
-							if (toInsert > itemStack.getCount()) toInsert = itemStack.getCount();
-							itemStack.decrement(toInsert);
-							stack.increment(toInsert);
-							if (itemStack.getCount() == 0) break;
-						}
-					}
-				}
-			}
+			StorageUtil.move(
+				InventoryStorage.of(blockEntity.inventory, Direction.UP).getSlot(0),
+				ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN),
+				iv -> true,
+				Long.MAX_VALUE,
+				null
+			);
 		}
 	}
 
