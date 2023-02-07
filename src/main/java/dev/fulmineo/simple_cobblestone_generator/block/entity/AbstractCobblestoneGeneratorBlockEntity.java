@@ -91,11 +91,7 @@ public abstract class AbstractCobblestoneGeneratorBlockEntity extends LockableCo
 	}
 
 	public int[] getAvailableSlots(Direction side) {
-		if (side == Direction.DOWN) {
-		   return new int[]{0};
-		} else {
-		   return new int[]{};
-		}
+		return new int[]{0};
 	 }
 
 	public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
